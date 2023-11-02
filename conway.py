@@ -1,3 +1,31 @@
+"""
+Code By: Cláudio Meireles
+
+Code on GitHub: https://github.com/Atum555/Conway-s-Game-of-Life-Python
+
+Modules required: pygame
+Minimum version tested: 3.10.12
+(Type hints used)
+
+---INTERACTIONS---
+MoveUp        Numpad8 ArrowUp KeyW
+MoveDown      Numpad2 ArrowDown KeyS
+MoveRight     Numpad6 ArrowRight KeyD
+MoveLeft      Numpad4 ArrowLeft KeyA
+Zoom+         NumpadAdd KeyZ
+Zoom-         NumpadSubtract KeyX
+Speed+        NumpadMultiply KeyC
+Speed-        NumpadDivide KeyV
+MoveToCenter  Numpad0 KeyO
+ZoomReset     NumpadDecimal KeyL
+SpeedReset    Numpad1 KeyF
+Pause/Play    KeyP
+Run1Iteration KeyI
+RandomSpawn   KeyR
+ClearWorld    KeyQ
+"""
+
+
 import pygame, math, random, time
 from typing import TypeAlias
 
@@ -17,7 +45,6 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
 
 def tick(world:World) -> World:
     """
@@ -62,22 +89,20 @@ def tick(world:World) -> World:
             newWorld[position] = True
     return newWorld
 
-
 def randomCells(window:pygame.surface.Surface, world:World, camera:Camera) -> World:  
     z = camera["zoom"]
     xInit = window.get_width() /2 - camera["x"]*z  
     yInit = window.get_height()/2 + camera["y"]*z  
 
-    xMin = math.ceil(-xInit / (CELL_SIZE *z)) 
-    yMin = math.ceil(-yInit / (CELL_SIZE *z)) 
-    xMax = math.ceil(xMin + window.get_width()  / (CELL_SIZE *z))
-    yMax = math.ceil(yMin + window.get_height() / (CELL_SIZE *z))
+    xMin = math.ceil((-xInit / (CELL_SIZE *z))*0.8) 
+    yMin = math.ceil((-yInit / (CELL_SIZE *z))*0.8) 
+    xMax = math.ceil(xMin + (window.get_width()  / (CELL_SIZE *z))*0.8)
+    yMax = math.ceil(yMin + (window.get_height() / (CELL_SIZE *z))*0.8)
 
     for x in range(xMin, xMax):
         for y in range(yMin, yMax):
             if random.choice((True, False)): world[(x,y)] = True 
     return world
-
 
 def render(window:pygame.surface.Surface, world:World, camera:Camera):
     window.fill("#001629")  # Paint Window BackGround
@@ -102,7 +127,6 @@ def render(window:pygame.surface.Surface, world:World, camera:Camera):
 
     pygame.display.flip()  # Update Screen
 
-
 def main():
     window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
     pygame.display.set_caption("Conway's Game of Life")
@@ -118,7 +142,7 @@ def main():
     world = randomCells(window, world, camera)  # Init random Cells
 
 
-    run = False
+    run = True
     while True:
         # Handle Events
         for event in pygame.event.get():
@@ -176,28 +200,8 @@ def main():
         colour = bcolors.OKGREEN if totalTime < 1/60*1000 else bcolors.WARNING if totalTime < 1/30*1000 else bcolors.FAIL
         print(f"Tick: {tickTime/1_000_000:.3f} ms\t\tRender: {renderTime/1_000_000:.3f} ms\t\tTotal: {colour}{totalTime:.3f}{bcolors.ENDC} ms")
 
-
 if __name__=="__main__":
     WINDOW_HEIGHT = 450
     WINDOW_WIDTH = 800
     CELL_SIZE = 20
     main()
-
-
-""" ---INTERACTIONS---
-MoveUp        {Numpad8;ArrowUp;KeyW}
-MoveDown      {Numpad2;ArrowDown;KeyS}
-MoveRight     {Numpad6;ArrowRight;KeyD}
-MoveLeft      {Numpad4;ArrowLeft;KeyA}
-Zoom+         {NumpadAdd;KeyZ}
-Zoom-         {NumpadSubtract;KeyX}
-Speed+        {NumpadMultiply;KeyC}
-Speed-        {NumpadDivide;KeyV}
-MoveToCenter  {Numpad0;KeyO}
-ZoomReset     {NumpadDecimal;KeyL}
-SpeedReset    {Numpad1;KeyF}
-Pause/Play    {KeyP}
-Run1Iteration {KeyI}
-RandomSpawn   {KeyR}
-ClearWorld    {KeyQ}
-"""

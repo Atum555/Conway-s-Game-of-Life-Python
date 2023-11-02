@@ -19,8 +19,8 @@ ZoomReset     NumpadDecimal KeyL
 SpeedReset    Numpad1 KeyF
 Pause/Play    KeyP
 Run1Iteration KeyI
-RandomSpawn   {KeyR}
-ClearWorld    {KeyQ}
+RandomSpawn   KeyR
+ClearWorld    KeyQ
 </pre>
 
 Done by:\
