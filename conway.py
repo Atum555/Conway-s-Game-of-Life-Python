@@ -114,12 +114,8 @@ def main():
         "zoom": 1,
         "speed": 5
     }
+    world = randomCells(window, world, camera)  # Init random Cells
 
-    world[(0,0)] = True
-    world[(1,1)] = True
-    world[(1,2)] = True
-    world[(3,1)] = True
-    world[(2,3)] = True
 
     run = False
     while True:
