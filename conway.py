@@ -54,6 +54,7 @@ def tick(world:World) -> World:
         ]:
             if not count.get(x): count[x] = 1
             else: count[x] += 1
+
     newWorld :World = {}  # Dict to store newWorld state after tick
     for position in count:
         if ((world.get(position) and count[position] == 2) or  # Is alive and 2 neighbors
@@ -122,6 +123,15 @@ def main():
         # Handle Events
         for event in pygame.event.get():
             if event.type == pygame.QUIT: pygame.quit(); exit(0)  # Close Button
+            if event.type == pygame.MOUSEBUTTONDOWN:  # Mouse Click
+                xCor, yCor = event.pos
+                xInit = window.get_width() /2 - camera["x"]*camera["zoom"] + CELL_SIZE *camera["zoom"]/2
+                yInit = window.get_height()/2 + camera["y"]*camera["zoom"] + CELL_SIZE *camera["zoom"]/2
+                x = math.ceil((xCor - xInit) / (CELL_SIZE *camera["zoom"]))
+                y = math.ceil((yCor - yInit) / (CELL_SIZE *camera["zoom"]))
+                if event.button == 1: world[(x,y)] = True
+                if event.button == 3: del world[(x,y)]
+                del xCor, yCor, xInit, yInit, x, y                    
             if event.type == pygame.KEYDOWN:  # Key Presses
                 match event.key:
                     case pygame.K_w | pygame.K_UP    | pygame.K_KP8: camera["y"] += 50/camera["zoom"]  # Move Up
