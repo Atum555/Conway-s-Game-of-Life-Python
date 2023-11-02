@@ -4,6 +4,7 @@ Modules required: pygame\
 Minimum version tested: 3.10.12\
 (Type hints used)
 
+<pre>
 ---INTERACTIONS---\
 MoveUp        Numpad8 ArrowUp KeyW\
 MoveDown      Numpad2 ArrowDown KeyS\
@@ -20,7 +21,7 @@ Pause/Play    KeyP\
 Run1Iteration KeyI\
 RandomSpawn   {KeyR}\
 ClearWorld    {KeyQ}
-
+</pre>
 
 Done by:\
 Cláudio Meireles
