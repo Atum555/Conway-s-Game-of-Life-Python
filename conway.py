@@ -94,8 +94,8 @@ def randomCells(window:pygame.surface.Surface, world:World, camera:Camera) -> Wo
     xInit = window.get_width() /2 - camera["x"]*z  
     yInit = window.get_height()/2 + camera["y"]*z  
 
-    xMin = math.ceil((-xInit / (CELL_SIZE *z))*0.8) 
-    yMin = math.ceil((-yInit / (CELL_SIZE *z))*0.8) 
+    xMin = math.ceil(-xInit / (CELL_SIZE *z) + (window.get_width()  / (CELL_SIZE *z))*0.1)
+    yMin = math.ceil(-yInit / (CELL_SIZE *z) + (window.get_height() / (CELL_SIZE *z))*0.1) 
     xMax = math.ceil(xMin + (window.get_width()  / (CELL_SIZE *z))*0.8)
     yMax = math.ceil(yMin + (window.get_height() / (CELL_SIZE *z))*0.8)
 
